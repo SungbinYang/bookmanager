@@ -5,6 +5,7 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
@@ -69,5 +70,6 @@ class UserRepositoryTest {
         System.out.println("findTopByNameOrderByIdDesc : " + userRepository.findTopByNameOrderByIdDesc("robert"));
         System.out.println("findFirstByNameOrderByIdDescEmailAsc: " + userRepository.findFirstByNameOrderByIdDescEmailAsc("robert"));
         System.out.println("findFirstByNameWithSortParams: " + userRepository.findFirstByName("robert", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+        System.out.println("findByNameWithPaging: " + userRepository.findByName("robert", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
     }
 }
