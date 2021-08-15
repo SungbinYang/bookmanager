@@ -5,6 +5,7 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 
@@ -60,6 +61,13 @@ class UserRepositoryTest {
         System.out.println("findByNameContains: " + userRepository.findByNameContains("be"));
 
         System.out.println("findByNameLike: " + userRepository.findByNameLike("%" + "ber" + "%"));
+    }
 
+    @Test
+    void pagingAndSortingTest() {
+        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("robert"));
+        System.out.println("findTopByNameOrderByIdDesc : " + userRepository.findTopByNameOrderByIdDesc("robert"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc: " + userRepository.findFirstByNameOrderByIdDescEmailAsc("robert"));
+        System.out.println("findFirstByNameWithSortParams: " + userRepository.findFirstByName("robert", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
     }
 }
