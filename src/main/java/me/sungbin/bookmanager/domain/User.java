@@ -1,18 +1,24 @@
 package me.sungbin.bookmanager.domain;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import me.sungbin.bookmanager.domain.listener.Auditable;
+import me.sungbin.bookmanager.domain.listener.UserEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Slf4j
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
 @Entity
+@EntityListeners(value = UserEntityListener.class)
 @Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User {
+public class User extends BaseEntity implements Auditable {
 
     @Id
     @GeneratedValue
@@ -27,14 +33,30 @@ public class User {
     @NonNull
     private String email;
 
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
+//    @Column(updatable = false)
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
 
-    private LocalDateTime updatedAt;
+//    @Transient
+//    private String testData;
 
-    @Transient
-    private String testData;
-    
 //    @OneToMany(fetch = FetchType.EAGER)
 //    private List<Address> addresses;
+
+//    @PrePersist
+//    public void prePersist() {
+//        log.info(">>> prePersist");
+//        this.createdAt = LocalDateTime.now();
+//        this.updatedAt = LocalDateTime.now();
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate() {
+//        log.info(">>> preUpdate");
+//        this.updatedAt = LocalDateTime.now();
+//    }
+
 }

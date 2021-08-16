@@ -17,6 +17,9 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
     @Test
     void crud() {
         userRepository.save(new User("david", "david@google.com"));
@@ -99,5 +102,60 @@ class UserRepositoryTest {
         userRepository.findAll().forEach(System.out::println);
 
         System.out.println(userRepository.findRawRecord().get("gender"));
+    }
+
+    @Test
+    void listenerTest() {
+        User user = new User();
+        user.setEmail("robert2@google.com");
+        user.setName("robert");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("robbbert");
+
+        userRepository.save(user2);
+
+        userRepository.deleteById(4L);
+    }
+
+    @Test
+    void prePersistTest() {
+        User user = new User();
+        user.setEmail("robert2@gmail.com");
+        user.setName("robert");
+//        user.setCreatedAt(LocalDateTime.now());
+//        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("robert2@gmail.com"));
+    }
+
+    @Test
+    void preUpdateTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        System.out.println("as-is: " + user);
+
+        user.setName("robert22");
+        userRepository.save(user);
+
+        System.out.println("to-be: " + userRepository.findAll().get(0));
+    }
+
+    @Test
+    void userHistoryTest() {
+        User user = new User();
+        user.setEmail("robert@nate.com");
+        user.setName("sungbin");
+
+        userRepository.save(user);
+
+        user.setName("yangsungbin");
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 }
