@@ -5,13 +5,13 @@ import me.sungbin.bookmanager.domain.UserHistory;
 import me.sungbin.bookmanager.repository.UserHistoryRepository;
 import me.sungbin.bookmanager.support.BeanUtils;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 
 public class UserEntityListener {
 
-    @PrePersist
-    @PreUpdate
+    @PostPersist
+    @PostUpdate
     public void prePersistAndPreUpdate(Object o) {
         UserHistoryRepository userHistoryRepository = BeanUtils.getBean(UserHistoryRepository.class);
 

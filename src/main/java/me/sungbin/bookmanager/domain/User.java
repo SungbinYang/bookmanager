@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.sungbin.bookmanager.domain.listener.UserEntityListener;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -16,7 +18,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @EntityListeners(value = UserEntityListener.class)
-@Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User extends BaseEntity {
 
     @Id
@@ -32,30 +33,7 @@ public class User extends BaseEntity {
     @NonNull
     private String email;
 
-//    @Column(updatable = false)
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-//
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
-
-//    @Transient
-//    private String testData;
-
-//    @OneToMany(fetch = FetchType.EAGER)
-//    private List<Address> addresses;
-
-//    @PrePersist
-//    public void prePersist() {
-//        log.info(">>> prePersist");
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    public void preUpdate() {
-//        log.info(">>> preUpdate");
-//        this.updatedAt = LocalDateTime.now();
-//    }
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private List<UserHistory> userHistories = new ArrayList<>();
 }

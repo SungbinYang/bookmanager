@@ -2,6 +2,7 @@ package me.sungbin.bookmanager.repository;
 
 import me.sungbin.bookmanager.domain.Gender;
 import me.sungbin.bookmanager.domain.User;
+import me.sungbin.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -157,5 +159,28 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void userRelationTest() {
+        User user = new User();
+        user.setName("david");
+        user.setEmail("davide@naver.com");
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
+
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("daniel@naver.com");
+        userRepository.save(user);
+
+//        userHistoryRepository.findAll().forEach(System.out::println);
+
+//        List<UserHistory> result = userHistoryRepository.findByUserId(userRepository.findByEmail("daniel@naver.com").getId());
+
+        List<UserHistory> result = userRepository.findByEmail("daniel@naver.com").getUserHistories();
+
+        result.forEach(System.out::println);
     }
 }
