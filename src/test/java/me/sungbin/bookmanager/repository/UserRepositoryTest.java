@@ -1,5 +1,6 @@
 package me.sungbin.bookmanager.repository;
 
+import me.sungbin.bookmanager.domain.Gender;
 import me.sungbin.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -71,5 +72,32 @@ class UserRepositoryTest {
         System.out.println("findFirstByNameOrderByIdDescEmailAsc: " + userRepository.findFirstByNameOrderByIdDescEmailAsc("robert"));
         System.out.println("findFirstByNameWithSortParams: " + userRepository.findFirstByName("robert", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
         System.out.println("findByNameWithPaging: " + userRepository.findByName("robert", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
+    }
+
+    @Test
+    void insertAndUpdateTest() {
+        User user = new User();
+
+        user.setName("robert");
+        user.setEmail("robert@gmail.com");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("sungbin");
+
+        userRepository.save(user2);
+    }
+
+    @Test
+    void enumTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
     }
 }
