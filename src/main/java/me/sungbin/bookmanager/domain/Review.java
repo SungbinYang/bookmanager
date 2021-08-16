@@ -1,25 +1,32 @@
 package me.sungbin.bookmanager.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class UserHistory extends BaseEntity {
+@Data
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String email;
+    private String content;
+
+    private float score;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Book book;
 }
