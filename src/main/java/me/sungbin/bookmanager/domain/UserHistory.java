@@ -1,10 +1,10 @@
 package me.sungbin.bookmanager.domain;
 
 import lombok.*;
-import me.sungbin.bookmanager.domain.listener.Auditable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,10 +13,10 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserHistory extends BaseEntity implements Auditable {
+public class UserHistory extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;

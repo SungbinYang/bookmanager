@@ -2,7 +2,6 @@ package me.sungbin.bookmanager.domain;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import me.sungbin.bookmanager.domain.listener.Auditable;
 import me.sungbin.bookmanager.domain.listener.UserEntityListener;
 
 import javax.persistence.*;
@@ -18,10 +17,10 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(value = UserEntityListener.class)
 @Table(name = "user", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User extends BaseEntity implements Auditable {
+public class User extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
