@@ -21,8 +21,8 @@ class BookReviewInfoRepositoryTest {
     @Test
     void crudTest() {
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
-
 //        bookReviewInfo.setBookId(1L);
+        bookReviewInfo.setBook(givenBook());
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
 
