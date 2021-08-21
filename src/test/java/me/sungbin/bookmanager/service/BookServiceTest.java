@@ -1,5 +1,6 @@
 package me.sungbin.bookmanager.service;
 
+import me.sungbin.bookmanager.domain.Book;
 import me.sungbin.bookmanager.repository.AuthorRepository;
 import me.sungbin.bookmanager.repository.BookRepository;
 import org.junit.jupiter.api.Test;
@@ -31,5 +32,16 @@ class BookServiceTest {
 
         System.out.println("books: " + bookRepository.findAll());
         System.out.println("authors: " + authorRepository.findAll());
+    }
+
+    @Test
+    void isolationTest() {
+        Book book = new Book();
+        book.setName("JPA Lecture");
+
+        bookRepository.save(book);
+
+        bookService.get(1L);
+        System.out.println(">>> " + bookRepository.findAll());
     }
 }
