@@ -41,3 +41,6 @@
   - @Query 적용
   - Native Query 사용
   - Converter 사용
+
+## 10. 임베디드 타입 활용
+  - 필요성, Embedded, Embeddable, 속성의 재정의
