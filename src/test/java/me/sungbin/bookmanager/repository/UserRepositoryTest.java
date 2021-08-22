@@ -1,5 +1,6 @@
 package me.sungbin.bookmanager.repository;
 
+import me.sungbin.bookmanager.domain.Address;
 import me.sungbin.bookmanager.domain.Gender;
 import me.sungbin.bookmanager.domain.User;
 import me.sungbin.bookmanager.domain.UserHistory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,6 +25,9 @@ class UserRepositoryTest {
 
     @Autowired
     private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     void crud() {
@@ -186,5 +191,38 @@ class UserRepositoryTest {
         result.forEach(System.out::println);
 
         System.out.println("UserHistory.getUser() " + userHistoryRepository.findAll().get(0).getUser());
+    }
+
+    @Test
+    void embedTest() {
+        userRepository.findAll().forEach(System.out::println);
+
+        User user = new User();
+        user.setName("steve");
+        user.setHomeAddress(new Address("경기도", "시흥시", "서울대학로284 호반써밋", "28333"));
+        user.setCompanyAddress(new Address("서울시", "강남구", "역삼역", "1234"));
+
+        userRepository.save(user);
+
+        User user1 = new User();
+        user1.setName("jacob");
+        user1.setHomeAddress(null);
+        user1.setCompanyAddress(null);
+
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("mark");
+        user2.setHomeAddress(new Address());
+        user2.setCompanyAddress(new Address());
+
+        userRepository.save(user2);
+
+        entityManager.clear();
+
+        userRepository.findAll().forEach(System.out::println);
+        userHistoryRepository.findAll().forEach(System.out::println);
+
+        userRepository.findAllRowRecord().forEach(a -> System.out.println(a.values()));
     }
 }
