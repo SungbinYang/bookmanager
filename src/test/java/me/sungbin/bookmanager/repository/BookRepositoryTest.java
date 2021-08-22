@@ -4,6 +4,7 @@ import me.sungbin.bookmanager.domain.Book;
 import me.sungbin.bookmanager.domain.Publisher;
 import me.sungbin.bookmanager.domain.Review;
 import me.sungbin.bookmanager.domain.User;
+import me.sungbin.bookmanager.repository.dto.BookStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -155,6 +156,21 @@ class BookRepositoryTest {
 
         System.out.println("affected rows: " + bookRepository.updateCategories());
         bookRepository.findAllCustom().forEach(System.out::println);
+    }
+
+    @Test
+    void converterTest() {
+        bookRepository.findAll().forEach(System.out::println);
+
+        Book book = new Book();
+        book.setName("또 다른 IT전문서적");
+        book.setStatus(new BookStatus(200));
+
+        bookRepository.save(book);
+
+        System.out.println(bookRepository.findRowRecord().values());
+
+        bookRepository.findAll().forEach(System.out::println);
     }
 
     private void givenBookAndReview() {

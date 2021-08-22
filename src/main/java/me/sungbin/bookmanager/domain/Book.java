@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import me.sungbin.bookmanager.domain.converter.BookStatusConverter;
+import me.sungbin.bookmanager.repository.dto.BookStatus;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -49,6 +51,9 @@ public class Book extends BaseEntity {
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 
     private boolean deleted;
+
+//    @Convert(converter = BookStatusConverter.class)
+    private BookStatus status; // 판매상태
 
     public void addBookAndAuthors(BookAndAuthor... bookAndAuthors) {
         Collections.addAll(this.bookAndAuthors, bookAndAuthors);
