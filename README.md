@@ -39,3 +39,4 @@
 
 ## 9. 커스텀 쿼리 사용
   - @Query 적용
+  - Native Query 사용
